@@ -1,4 +1,6 @@
 <?php
+
+require_once './assets/functions.php';
 // avant la 1ere saisie
 $firstname = $lastname = $email = $phone = $message = "";
 $firstnameError = $lastnameError = $emailError = $phoneError = $messageError = "";
@@ -58,43 +60,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if($isSuccess){
         //envoi de l'email
-        $headers ="From: $firstname $lastname <$email>\r\nReply-to:$email";
-        mail($emailTo, "un message de votre site", $emailContent, $headers);
+        $headers = "From: $firstname $lastname <$email>\r\nReply-to:$email";
+        sendMail($headers, $emailTo , $emailContent);
+        
+        //remise a zero des variables
         $firstname = $lastname = $email = $phone = $message = "";
     }
-}
-
-/**
- * function verifyInput => securise les données saisies
- *
- * @param mixed $var
- * @return mixed
- * 
- */
-function verifyInput($var)
-{
-    $var = htmlspecialchars(stripslashes(trim($var)));
-    return $var;
-}
-
-/**
- * function isEmail => test la validité de l'email saisie
- *
- * @param  string  $var
- * @return boolean
- */
-function isEmail($var) {
-    return filter_var($var , FILTER_VALIDATE_EMAIL);
-}
-
-/**
- * function isPhone => test la saisie d'un numero de telephone
- *
- * @param  int    $var
- * @return boolean
- */
-function isPhone($var){
-    return preg_match("/^[0-9 ]*$/", $var);
 }
 
 ?>
