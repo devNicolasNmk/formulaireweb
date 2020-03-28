@@ -11,3 +11,5 @@ un formulaire web php
 ## ajout de la structure css du formulaire
 
 ## ajout du php du formulaire
+
+## ajout validation du formulaire
