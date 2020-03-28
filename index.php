@@ -1,13 +1,25 @@
 <?php
-
+    // avant la 1ere saisie
     $firstname = $name = $email = $phone = $message = "";
-
+    // si il y a eu une saisie envoyée
     if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $firstname = $_POST['firstname'];
-        $lastname = $_POST['lastname'];
-        $email = $_POST['email'];
-        $phone = $_POST['phone'];
-        $message = $_POST['message'];
+        $firstname = verifyInput($_POST['firstname']);
+        $lastname  = verifyInput($_POST['lastname']);
+        $email     = verifyInput($_POST['email']);
+        $phone     = verifyInput($_POST['phone']);
+        $message   = verifyInput($_POST['message']);
+    }
+
+    /**
+     * function verifyInput => securise les données saisies
+     *
+     * @param mixed $var
+     * @return mixed
+     * 
+     */
+    function verifyInput($var){
+        $var = htmlspecialchars( stripslashes( trim($var) ) );
+        return $var;
     }
 
 ?>
@@ -38,7 +50,7 @@
         </div>
         <div class="row">
             <div class="col-lg-10 col-lg-offset-1">
-                <form action="<?php echo $_SERVER['PHP_SELF']; ?>" id="contact-form" method="post" role="form">
+                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" id="contact-form" method="post" role="form">
                     <div class=row>
                         <div class="col-md-6">
                             <label for="firstname">Prénom<span class="green">*</span></label>
