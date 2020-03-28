@@ -1,68 +1,68 @@
-body{
+body {
     font-family: "Lato", sans-serif;
     margin: 70px 0px;
-    background: url("../img/forest.jpg") repeat scroll ;
+    background: url("../img/forest.jpg") repeat scroll;
 }
 
-.divider{
+.divider {
     width: 100px;
     height: 2px;
     background: #fff;
     margin: 0 auto;
 }
 
-.heading{
+.heading {
     text-align: center;
     margin-bottom: 60px;
 }
 
-h2{
+h2 {
 
     text-transform: uppercase;
     font-weight: bold;
-    color:#fff; 
+    color: #fff;
 
 }
 
-#contact-form{
+#contact-form {
     font-size: 20px;
     background: rgba(255, 255, 255, 0.8);
     padding: 40px;
     border-radius: 10px;
 }
 
-.green{
+.green {
     color: #79967a;
 }
 
-.form-control{
+.form-control {
     height: 50px;
     font-size: 18px;
 }
 
-.comments{
+.comments {
     font-style: italic;
     font-size: 18px;
     color: #d82c2e;
     height: 25px;
 }
 
-#contact-form input[type=submit]{
+#contact-form input[type=submit] {
     margin: 40px auto 0px auto;
     display: block;
 }
 
-.button1{
+.button1 {
     background-origin: 1px solid #ddd !important;
     width: 100%;
     /* font-weight: bold; */
     text-transform: uppercase;
     padding: 18px;
-    transition : all 0.3s ease-in 0s;
+    transition: all 0.3s ease-in 0s;
 }
 
-.thank-you{
-    text-align :center;
+.thank-you {
+    text-align: center;
     margin-top: 15px;
     font-weight: bold;
     font-size: 22px;
