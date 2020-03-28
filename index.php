@@ -32,17 +32,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     }else{
         $emailContent .= "lastname : $lastname \n";
     }
-    if (empty($email) ) {
-
-        $emailError = "Je peux pas te recontacter sans ton mail?";
-        $isSuccess  = false;
-    }else{
-        $emailContent .= "email : $email \n";
-    }
-
+  
     if(!isEmail($email)){
         $emailError = "hey ce mail n'est pas valide !!!!";
         $isSuccess  = false;
+    }else{
+        $emailContent .= "email : $email \n";
     }
 
     if(!isPhone($phone)){
@@ -62,7 +57,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         //envoi de l'email
         $headers = "From: $firstname $lastname <$email>\r\nReply-to:$email";
         sendMail($headers, $emailTo , $emailContent);
-        
+
         //remise a zero des variables
         $firstname = $lastname = $email = $phone = $message = "";
     }
