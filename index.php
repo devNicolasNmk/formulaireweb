@@ -63,6 +63,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $headers = "From: $firstname $lastname <$email>\r\nReply-to:$email";
         sendMail($headers, $emailTo , $emailContent);
         
+        //remise a zero des variables
         $firstname = $lastname = $email = $phone = $message = "";
     }
 }
