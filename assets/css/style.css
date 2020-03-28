@@ -30,3 +30,40 @@ h2{
     padding: 40px;
     border-radius: 10px;
 }
+
+.green{
+    color: #79967a;
+}
+
+.form-control{
+    height: 50px;
+    font-size: 18px;
+}
+
+.comments{
+    font-style: italic;
+    font-size: 18px;
+    color: #d82c2e;
+    height: 25px;
+}
+
+#contact-form input[type=submit]{
+    margin: 40px auto 0px auto;
+    display: block;
+}
+
+.button1{
+    background-origin: 1px solid #ddd !important;
+    width: 100%;
+    /* font-weight: bold; */
+    text-transform: uppercase;
+    padding: 18px;
+    transition : all 0.3s ease-in 0s;
+}
+
+.thank-you{
+    text-align :center;
+    margin-top: 15px;
+    font-weight: bold;
+    font-size: 22px;
+}
