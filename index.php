@@ -1,26 +1,83 @@
 <?php
-    // avant la 1ere saisie
-    $firstname = $name = $email = $phone = $message = "";
-    // si il y a eu une saisie envoyée
-    if ($_SERVER["REQUEST_METHOD"] == "POST") {
-        $firstname = verifyInput($_POST['firstname']);
-        $lastname  = verifyInput($_POST['lastname']);
-        $email     = verifyInput($_POST['email']);
-        $phone     = verifyInput($_POST['phone']);
-        $message   = verifyInput($_POST['message']);
-    }
+// avant la 1ere saisie
+$firstname = $lastname = $email = $phone = $message = "";
+$firstnameError = $lastnameError = $emailError = $phoneError = $messageError = "";
+$isSuccess = false;
 
-    /**
-     * function verifyInput => securise les données saisies
-     *
-     * @param mixed $var
-     * @return mixed
-     * 
-     */
-    function verifyInput($var){
-        $var = htmlspecialchars( stripslashes( trim($var) ) );
-        return $var;
+// si il y a eu une saisie envoyée
+if ($_SERVER["REQUEST_METHOD"] == "POST") {
+    $firstname = verifyInput($_POST['firstname']);
+    $lastname  = verifyInput($_POST['lastname']);
+    $email     = verifyInput($_POST['email']);
+    $phone     = verifyInput($_POST['phone']);
+    $message   = verifyInput($_POST['message']);
+    $isSuccess = true;
+
+    if(empty($firstname)){
+        
+        $firstnameError = "hey prénom oublié?";
+        $isSuccess      = false;
     }
+    if (empty($lastname)) {
+
+        $lastnameError = "Tu n'as pas de nom???";
+        $isSuccess     = false;
+    }
+    if (empty($email) ) {
+
+        $emailError = "Je peux pas te recontacter sans ton mail?";
+        $isSuccess  = false;
+    }
+    if(!isEmail($email)){
+        $emailError = "hey ce mail n'est pas valide !!!!";
+        $isSuccess  = false;
+    }
+    if (empty($message)) {
+
+        $messageError = "hey j'ai pas compris ton message, c'est vide !!!";
+        $isSuccess    = false;
+    }
+    if(!isPhone($phone)){
+        $phoneError = "Verifier votre numéro de telephone (chiffres uniquement) ";
+        $isSuccess  = false;
+    }
+    if($isSuccess){
+        //envoi de l'email
+    }
+}
+
+/**
+ * function verifyInput => securise les données saisies
+ *
+ * @param mixed $var
+ * @return mixed
+ * 
+ */
+function verifyInput($var)
+{
+    $var = htmlspecialchars(stripslashes(trim($var)));
+    return $var;
+}
+
+/**
+ * function isEmail => test la validité de l'email saisie
+ *
+ * @param  string  $var
+ * @return boolean
+ */
+function isEmail($var) {
+    return filter_var($var , FILTER_VALIDATE_EMAIL);
+}
+
+/**
+ * function isPhone => test la saisie d'un numero de telephone
+ *
+ * @param  int    $var
+ * @return boolean
+ */
+function isPhone($var){
+    return preg_match("/^[0-9 ]*$/", $var);
+}
 
 ?>
 <!DOCTYPE html>
@@ -54,28 +111,28 @@
                     <div class=row>
                         <div class="col-md-6">
                             <label for="firstname">Prénom<span class="green">*</span></label>
-                            <input type="text" name="firstname" id="firstname" class="form-control" placeholder="Votre prénom" value="<?= $firstname; ?>">
-                            <p class="comments">Message d'erreur</p>
+                            <input type="text" name="firstname" id="firstname" class="form-control"  placeholder="Votre prénom" value="<?= $firstname; ?>">
+                            <p class="comments"><?= $firstnameError;?></p>
                         </div>
                         <div class="col-md-6">
                             <label for="lastname">Nom<span class="green">*</span></label>
-                            <input type="text" name="lastname" id="lastname" class="form-control" placeholder="Votre nom" value="<?= $lastname; ?>">
-                            <p class="comments">Message d'erreur</p>
+                            <input type="text" name="lastname" id="lastname" class="form-control"  placeholder="Votre nom" value="<?= $lastname; ?>">
+                            <p class="comments"><?= $lastnameError;?></p>
                         </div>
                         <div class="col-md-6">
                             <label for="email">Email<span class="green">*</span></label>
-                            <input type="text" name="email" id="email" class="form-control" placeholder="Votre email" value="<?= $email; ?>">
-                            <p class="comments">Message d'erreur</p>
+                            <input type="text" name="email" id="email" class="form-control"  placeholder="Votre email" value="<?= $email; ?>">
+                            <p class="comments"><?= $emailError;?></p>
                         </div>
                         <div class="col-md-6">
                             <label for="phone">Téléphone</label>
-                            <input type="text" name="phone" id="phone" class="form-control" placeholder="Votre téléphone" value="<?= $phone; ?>">
-                            <p class="comments">Message d'erreur</p>
+                            <input type="tel" name="phone" id="phone" class="form-control" placeholder="Votre téléphone" value="<?= $phone; ?>">
+                            <p class="comments"><?= $phoneError;?></p>
                         </div>
                         <div class="col-md-12">
                             <label for="message">Message<span class="green">*</span></label>
-                            <textarea name="message" id="message" class="form-control" placeholder="Votre message" rows="4"><?= $message; ?></textarea>
-                            <p class="comments">Message d'erreur</p>
+                            <textarea name="message" id="message" class="form-control"  placeholder="Votre message" rows="4"><?= $message; ?></textarea>
+                            <p class="comments"><?= $messageError;?></p>
                         </div>
 
                         <div class="col-md-12">
@@ -88,7 +145,7 @@
                         </div>
                     </div>
 
-                    <p class="thank-you">Votre message a bien été envoyé. Merci de m'avoir contacté !</p>
+                    <p class="thank-you" style="display:<?= ($isSuccess) ? 'block': 'none';?>">Votre message a bien été envoyé. Merci de m'avoir contacté !</p>
                 </form>
             </div>
         </div>
