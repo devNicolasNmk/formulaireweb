@@ -4,45 +4,63 @@ $firstname = $lastname = $email = $phone = $message = "";
 $firstnameError = $lastnameError = $emailError = $phoneError = $messageError = "";
 $isSuccess = false;
 
+$emailTo = "test@test.com";
+
 // si il y a eu une saisie envoyée
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $firstname = verifyInput($_POST['firstname']);
-    $lastname  = verifyInput($_POST['lastname']);
-    $email     = verifyInput($_POST['email']);
-    $phone     = verifyInput($_POST['phone']);
-    $message   = verifyInput($_POST['message']);
-    $isSuccess = true;
+    $firstname    = verifyInput($_POST['firstname']);
+    $lastname     = verifyInput($_POST['lastname']);
+    $email        = verifyInput($_POST['email']);
+    $phone        = verifyInput($_POST['phone']);
+    $message      = verifyInput($_POST['message']);
+    $isSuccess    = true;
+    $emailContent = "";
 
     if(empty($firstname)){
         
         $firstnameError = "hey prénom oublié?";
         $isSuccess      = false;
+    }else{
+        $emailContent .= "Firstname : $firstname \n";
     }
     if (empty($lastname)) {
 
         $lastnameError = "Tu n'as pas de nom???";
         $isSuccess     = false;
+    }else{
+        $emailContent .= "lastname : $lastname \n";
     }
     if (empty($email) ) {
 
         $emailError = "Je peux pas te recontacter sans ton mail?";
         $isSuccess  = false;
+    }else{
+        $emailContent .= "email : $email \n";
     }
+
     if(!isEmail($email)){
         $emailError = "hey ce mail n'est pas valide !!!!";
         $isSuccess  = false;
     }
-    if (empty($message)) {
 
-        $messageError = "hey j'ai pas compris ton message, c'est vide !!!";
-        $isSuccess    = false;
-    }
     if(!isPhone($phone)){
         $phoneError = "Verifier votre numéro de telephone (chiffres uniquement) ";
         $isSuccess  = false;
+    }else{
+        $emailContent .= "phone : $phone \n";
     }
+    if (empty($message)) {
+        $messageError = "hey j'ai pas compris ton message, c'est vide !!!";
+        $isSuccess    = false;
+    } else {
+        $emailContent .= "message : $message \n";
+    }
+
     if($isSuccess){
         //envoi de l'email
+        $headers ="From: $firstname $lastname <$email>\r\nReply-to:$email";
+        mail($emailTo, "un message de votre site", $emailContent, $headers);
+        $firstname = $lastname = $email = $phone = $message = "";
     }
 }
 
