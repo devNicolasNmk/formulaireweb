@@ -1,69 +1,4 @@
-<?php
 
-require_once './assets/functions.php';
-// avant la 1ere saisie
-$firstname = $lastname = $email = $phone = $message = "";
-$firstnameError = $lastnameError = $emailError = $phoneError = $messageError = "";
-$isSuccess = false;
-
-$emailTo = "test@test.com";
-
-// si il y a eu une saisie envoyée
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $firstname    = verifyInput($_POST['firstname']);
-    $lastname     = verifyInput($_POST['lastname']);
-    $email        = verifyInput($_POST['email']);
-    $phone        = verifyInput($_POST['phone']);
-    $message      = verifyInput($_POST['message']);
-    $isSuccess    = true;
-    $emailContent = "";
-
-    if(empty($firstname)){
-        
-        $firstnameError = "hey prénom oublié?";
-        $isSuccess      = false;
-    }else{
-        $emailContent .= "Firstname : $firstname \n";
-    }
-    if (empty($lastname)) {
-
-        $lastnameError = "Tu n'as pas de nom???";
-        $isSuccess     = false;
-    }else{
-        $emailContent .= "lastname : $lastname \n";
-    }
-  
-    if(!isEmail($email)){
-        $emailError = "hey ce mail n'est pas valide !!!!";
-        $isSuccess  = false;
-    }else{
-        $emailContent .= "email : $email \n";
-    }
-
-    if(!isPhone($phone)){
-        $phoneError = "Verifier votre numéro de telephone (chiffres uniquement) ";
-        $isSuccess  = false;
-    }else{
-        $emailContent .= "phone : $phone \n";
-    }
-    if (empty($message)) {
-        $messageError = "hey j'ai pas compris ton message, c'est vide !!!";
-        $isSuccess    = false;
-    } else {
-        $emailContent .= "message : $message \n";
-    }
-
-    if($isSuccess){
-        //envoi de l'email
-        $headers = "From: $firstname $lastname <$email>\r\nReply-to:$email";
-        sendMail($headers, $emailTo , $emailContent);
-
-        //remise a zero des variables
-        $firstname = $lastname = $email = $phone = $message = "";
-    }
-}
-
-?>
 <!DOCTYPE html>
 <html lang="fr">
 
@@ -91,32 +26,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         </div>
         <div class="row">
             <div class="col-lg-10 col-lg-offset-1">
-                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']); ?>" id="contact-form" method="post" role="form">
+                <form action="" id="contact-form" method="post" role="form">
                     <div class=row>
                         <div class="col-md-6">
                             <label for="firstname">Prénom<span class="green">*</span></label>
-                            <input type="text" name="firstname" id="firstname" class="form-control"  placeholder="Votre prénom" value="<?= $firstname; ?>">
-                            <p class="comments"><?= $firstnameError;?></p>
+                            <input type="text" name="firstname" id="firstname" class="form-control"  placeholder="Votre prénom" value="">
+                            <p class="comments"></p>
                         </div>
                         <div class="col-md-6">
                             <label for="lastname">Nom<span class="green">*</span></label>
-                            <input type="text" name="lastname" id="lastname" class="form-control"  placeholder="Votre nom" value="<?= $lastname; ?>">
-                            <p class="comments"><?= $lastnameError;?></p>
+                            <input type="text" name="lastname" id="lastname" class="form-control"  placeholder="Votre nom" value="">
+                            <p class="comments"></p>
                         </div>
                         <div class="col-md-6">
                             <label for="email">Email<span class="green">*</span></label>
-                            <input type="text" name="email" id="email" class="form-control"  placeholder="Votre email" value="<?= $email; ?>">
-                            <p class="comments"><?= $emailError;?></p>
+                            <input type="text" name="email" id="email" class="form-control"  placeholder="Votre email" value="">
+                            <p class="comments"></p>
                         </div>
                         <div class="col-md-6">
                             <label for="phone">Téléphone</label>
-                            <input type="tel" name="phone" id="phone" class="form-control" placeholder="Votre téléphone" value="<?= $phone; ?>">
-                            <p class="comments"><?= $phoneError;?></p>
+                            <input type="tel" name="phone" id="phone" class="form-control" placeholder="Votre téléphone" value="">
+                            <p class="comments"></p>
                         </div>
                         <div class="col-md-12">
                             <label for="message">Message<span class="green">*</span></label>
-                            <textarea name="message" id="message" class="form-control"  placeholder="Votre message" rows="4"><?= $message; ?></textarea>
-                            <p class="comments"><?= $messageError;?></p>
+                            <textarea name="message" id="message" class="form-control"  placeholder="Votre message" rows="4"></textarea>
+                            <p class="comments"></p>
                         </div>
 
                         <div class="col-md-12">
@@ -129,7 +64,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
 
-                    <p class="thank-you" style="display:<?= ($isSuccess) ? 'block': 'none';?>">Votre message a bien été envoyé. Merci de m'avoir contacté !</p>
                 </form>
             </div>
         </div>
