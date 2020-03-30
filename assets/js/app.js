@@ -14,7 +14,7 @@ $(function () {
             data: postdata,
             datatype: 'json',
             success: function (result) {
-                console.log(result)
+                //retransformer la string en objet
                  result = JSON.parse(result)
                
                 if (result.isSuccess) {
