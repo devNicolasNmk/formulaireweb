@@ -13,3 +13,5 @@ un formulaire web php
 ## ajout du php du formulaire
 
 ## ajout validation du formulaire
+
+## ajout de l'ajax a la validation du formulaire
